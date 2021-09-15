@@ -22,7 +22,14 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  if (user.todos.length === 10 && !user.pro)
+    return response
+      .status(403)
+      .json({ error: "Upgrade to pro to add more tasks" });
+
+  return next();
 }
 
 function checksTodoExists(request, response, next) {
